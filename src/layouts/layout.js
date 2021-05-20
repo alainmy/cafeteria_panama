@@ -12,7 +12,7 @@ import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Zoom from '@material-ui/core/Zoom';
 import Header from '../components/Header';
-import { Route, Switch } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import ProductList from '../components/productsList';
 import { ListsContext } from '../Context/ItemsContextProvider';
 import ItemsContextProvider from '../Context/ItemsContextProvider';
@@ -110,22 +110,29 @@ export default function Layout(props) {
   return ( 
       <ItemsContextProvider>
         <ListsContext.Consumer>
-          {(list, loading,filter, handleFilter,categories) => (
-            <div className={classes.root}> 
+          {(list, loading,filter, handleFilter,categories,error) => (
+            <div className={classes.root}>
+               
               <CssBaseline />
               <Header 
-              onClick={() => handleDrawerToggle()} 
-              handleFilter = {list.handleFilter} 
-              categories = {list.categories} 
-              loading = {loading}
-              classes = {{appBar:classes.appBar,menuButton:classes.menuButton,sectionDesktop:classes.sectionDesktop,grow:classes.grow}}
+                onClick={() => handleDrawerToggle()} 
+                handleFilter = {list.handleFilter} 
+                categories = {list.categories} 
+                loading = {loading}
+                classes = {{appBar:classes.appBar,menuButton:classes.menuButton,sectionDesktop:classes.sectionDesktop,grow:classes.grow}}
               />
               <DrawerNav mobileOpen={mobileOpen} handleDrawerToggle={() => handleDrawerToggle()} container = {container}/>
               <Toolbar id="back-to-top-anchor" />
               <main className={classes.content}>
                 <div className={classes.toolbar} />
                 <Switch>
-                  <Route exact path='/' render={props => list && <ProductList items={{ list, loading,filter,handleFilter }} {...props} />} />
+                  {list.error === '' ?
+                    <>
+                      <Route exact path='/' render={props => list && <ProductList items={{ list }} {...props} />} />
+                      <Route exact path='/:id' component={() => (<p>sdsds</p>)} />
+                    </>:
+                    <p>{list.error}</p>
+                  }
                 </Switch>
               </main>
               <ScrollTop {...props}>
@@ -140,3 +147,4 @@ export default function Layout(props) {
   );
 }
 
+//47363808

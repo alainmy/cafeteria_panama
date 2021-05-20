@@ -9,26 +9,9 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton, { IconButtonProps } from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Chip, Divider, Avatar, ListItem, ListItemAvatar, ListItemText, makeStyles } from '@material-ui/core';
-interface ExpandMoreProps extends IconButtonProps {
-  expand: boolean;
-}
-
-const ExpandMore = styled((props: ExpandMoreProps) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
+import { Avatar, ListItem, ListItemAvatar, ListItemText, makeStyles } from '@material-ui/core';
+import { Link as RouterLink, useRouteMatch } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,19 +22,30 @@ const useStyles = makeStyles((theme) => ({
   inline: {
     display: 'inline',
   },
+  inblock: {
+    display: 'block',
+  },
 }));
 
 export default function RecipeReviewCard(props) {
   const classes = useStyles();
   const item = props.item;
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  let match = useRouteMatch();
+  
+  const { to } = props;
+  //alert(to)
+  const CustomLink = React.useMemo(
+    () =>
+      React.forwardRef((linkProps, ref) => (
+        <Link ref={ref} to={to} {...linkProps} />
+      )),
+    [to],
+  );
 
   return (
-    <ListItem >
+    // <Link component={RouterLink}}>
+      <li>
+        <ListItem  component={RouterLink} to={`${to}`} disabled = {item.state !== 'ENABLE'}>
         <ListItemAvatar>
           <Avatar alt="Remy Sharp" src="assets/images/paella.jpg" />
         </ListItemAvatar>
@@ -68,10 +62,20 @@ export default function RecipeReviewCard(props) {
                 Ali Connors
               </Typography>
               {" — I'll be in your neighborhood doing errands this…"}
+              <Typography
+                component="span"
+                variant="body2"
+                className={classes.inblock }
+                color="textPrimary"
+              >
+                <b>price:</b> ${item.price}
+              </Typography>
             </React.Fragment>
           }
         />
       </ListItem>
+      </li>
+    // </Link>
 
   );
 }
