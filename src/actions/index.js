@@ -51,7 +51,14 @@ export const getItems = async (currentIndex) => {
   return await axios.get(`https://backend.nelosoftt.com/api-nelo/items`)
     .then(res => {
       // console.log(res)
-      return {items:res.data.Data}
+      return {
+              items:res.data.Data,
+              data:true,
+              errors:null
+            }
+    }).catch(err =>{
+      console.log(err)
+      return {items:[],data:false,errors:err}
     })
   // return new Promise((resolve,reject) =>{
   //   setTimeout(() =>{
@@ -65,9 +72,16 @@ export const getCategories = async () => {
   return await axios.get(`https://backend.nelosoftt.com/api-nelo/items/depts`)
     .then(res => {
 
-      return {items:res.data.Data}
+      return {
+              items:res.data.Data,
+              data:true,
+              errors:null
+            }
       //return {items:res.data.Data.slice(currentIndex - 1,10 + currentIndex)}
       
+}).catch(err =>{
+  console.log(err)
+  return {items:[],data:false,errors:err}
 })
 }
 export const createMovie = (movie) => {
