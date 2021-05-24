@@ -47,7 +47,7 @@ export default function RecipeReviewCard(props) {
       <li>
         <ListItem  component={RouterLink} to={`${to}`} disabled = {item.state !== 'ENABLE'}>
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="assets/images/paella.jpg" />
+          <Avatar alt="Remy Sharp" src={`https://backend.nelosoftt.com/image/${item._filename}`} />
         </ListItemAvatar>
         <ListItemText
           primary={item.name}

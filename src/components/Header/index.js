@@ -1,10 +1,10 @@
 import React from 'react';
-import { AppBar, Badge, Button, IconButton, makeStyles, Menu, MenuItem, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Badge, Button, IconButton, Toolbar } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import { AccountCircle } from '@material-ui/icons';
+
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import { connect } from 'react-redux';
 
 const Header = (props) => {
   const classes = props.classes;
@@ -31,8 +31,8 @@ const Header = (props) => {
             </Badge>
           </IconButton> */}
           <IconButton aria-label="show 17 new notifications" color="inherit">
-            <Badge badgeContent={17} color="secondary">
-              <NotificationsIcon />
+            <Badge badgeContent={props.itemsCount} color="secondary">
+              <ShoppingCartIcon />
             </Badge>
           </IconButton>
           {/* <IconButton
@@ -55,4 +55,10 @@ Header.propTypes = {
 
 };
 
-export default Header;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    itemsCount: state.itemsCount
+  }
+}
+
+export default connect(mapStateToProps)(Header) ;

@@ -21,6 +21,8 @@ import drawer from '../components/DrawerLeft/index';
 import Hidden from '@material-ui/core/Hidden';
 import { useTheme } from '@emotion/react';
 import DrawerNav from '../components/DrawerLeft/DrawerNav';
+import ItemPurshage from '../components/productItem/ItemPurshage';
+import ItemsOrder from '../components/ItemsOrder';
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    width:'100%'
+    width:'100%',
+    background:'lightgrey'
   },
   appBar: {
     [theme.breakpoints.up('sm')]: {
@@ -122,24 +125,26 @@ export default function Layout(props) {
                 classes = {{appBar:classes.appBar,menuButton:classes.menuButton,sectionDesktop:classes.sectionDesktop,grow:classes.grow}}
               />
               <DrawerNav mobileOpen={mobileOpen} handleDrawerToggle={() => handleDrawerToggle()} container = {container}/>
-              <Toolbar id="back-to-top-anchor" />
+              {/* <Toolbar id="back-to-top-anchor" /> */}
               <main className={classes.content}>
                 <div className={classes.toolbar} />
                 <Switch>
                   {list.error === '' ?
                     <>
-                      <Route exact path='/' render={props => list && <ProductList items={{ list }} {...props} />} />
-                      <Route exact path='/:id' component={() => (<p>sdsds</p>)} />
+                      <Route exact path='/' render={props => list && <ProductList context={{ list }} {...props} />} />
+                      <Route exact path='/:id/items' render={props => list && <ItemPurshage item={{ list }} {...props} />} />
+                      <Route exact path='/order' component ={ItemsOrder} />
+                      
                     </>:
                     <p>{list.error}</p>
                   }
                 </Switch>
               </main>
-              <ScrollTop {...props}>
+              {/* <ScrollTop {...props}>
                 <Fab color="secondary" size="small" aria-label="scroll back to top">
                   <KeyboardArrowUpIcon />
                 </Fab>
-              </ScrollTop>
+              </ScrollTop> */}
             </div>
           )}
         </ListsContext.Consumer>

@@ -23,11 +23,11 @@ const useStyles = makeStyles((theme) => ({
   }));
 function ProductList(props) {
     const classes = useStyles();
-    let items = props.items.list.lists.filter(item => {
-        return item.category === props.items.list.filter && props.items.list.filter !== 'ALL'
+    let items = props.context.list.lists.filter(item => {
+        return item.category === props.context.list.filter && props.context.list.filter !== 'ALL'
     });
-    const categories = props.items.list.categories;
-    items = items.length > 0 ? items : props.items.list.lists;
+    const categories = props.context.list.categories;
+    items = items.length > 0 ? items : props.context.list.lists;
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {
@@ -36,18 +36,16 @@ function ProductList(props) {
 
     const handleClose = (item = null) => {
         setAnchorEl(null);
-        console.log(null)
         if(item !== null){
-            props.items.list.handleFilter(item);
+            props.context.list.handleFilter(item);
         }
     };
-
     return (
         <Container maxWidth="md">
             <Grid container justifyContent="center" spacing={2}>
                 <Grid item sm={12}>
                     <div>
-                            {!props.items.list.loading ?
+                            {!props.context.list.loading ?
                                 categories.map((item, index) => (
                                     <Button
                                         className={classes.margin}
@@ -68,17 +66,17 @@ function ProductList(props) {
                     <List sx={{ width: '100%', bgcolor: 'background.paper' }}
                         subheader={
                             <ListSubheader component="div" id="nested-list-subheader">
-                                {props.items.list.filter}
+                                {props.context.list.filter}
                             </ListSubheader>
                         }
                     >
 
-                        {!props.items.list.loading ?
+                        {!props.context.list.loading ?
                             items.map((item, index) =>
                             (
-                                <div key={`${item}-${item._id}`}>
+                                <div key={`${item}-${item._id}`} >
                                     <>
-                                            <ProductItem to="/inbox" item={item} index={index} />
+                                            <ProductItem to={`${item._id}/items`} item={item} index={index} />
                                     </>
                                     
                                     <Divider />

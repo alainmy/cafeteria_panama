@@ -14,9 +14,17 @@ import {
 import App from './App';
 import theme from './theme';
 import { Typography } from '@material-ui/core';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import orderReducer from './Redux/OrederRecer';
+import IssTracker from './components/IssTracker/index';
+
 const context = {}
+
+const store = createStore(orderReducer);
+
 ReactDOM.render(
-  
+  <Provider store={store}>
   <ThemeProvider theme={theme}>
    
    <Router context={context}>
@@ -24,6 +32,6 @@ ReactDOM.render(
    
       <App /> 
    </Router>
-  </ThemeProvider>,
+  </ThemeProvider></Provider>,
   document.querySelector('#root'),
 );

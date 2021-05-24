@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Drawer, Hidden, makeStyles } from '@material-ui/core';
+import { Drawer, makeStyles } from '@material-ui/core';
 import { useTheme } from '@emotion/react';
 import DrawerLet from '../index';
+import Hidden from '@material-ui/core/Hidden';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +29,6 @@ const DrawerNav = (props) => {
     const classes = useStyles();
 
     const theme = useTheme();
-    console.log(props.mobileOpen)
 
 
     
