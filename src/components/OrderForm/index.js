@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
     },
     GroupFields: {
         marginBottom: theme.spacing(1),
+        backgroundColor:'#ffb74d' ,
         // padding: theme.spacing(2, 1),
         //border: '1px solid ThreeDLightShadow'
     },
@@ -97,29 +98,6 @@ const OrderForm = (props) => {
     const [form, setForm] = useState(defaultData);
     const [isInitialData, setIsInitialData] = useState(false);
     const history = useHistory();
-
-
-    // const getItem = async () => {
-    //     const { id } = props.match.params;
-    //     const item = await props.item.list.lists.find((item) => item._id === id);
-    //     const add = item._idadds;
-    //     defaultData._iditem = item._id;
-    //     defaultData.price = item.price;
-    //     defaultData.name = item.name;
-    //     defaultData._filename = item._filename;
-    //     add.map((item) => {
-
-    //         defaultData._idadds[item] = 0
-    //         return;
-    //     })
-    //     setForm(defaultData);
-    //     setItem(item);
-    //     setLoading(false);
-    // }
-
-    // useEffect(() => {
-    //     getItem();
-    // }, [])
 
     const handleChange = (event) => {
         const target = event.target;

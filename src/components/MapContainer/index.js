@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import HocAux from '../../Hoc/Hoc';
+import { Paper } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
 
 
 const mapStyles = {
-    width: '70%',
-    height: '70%',
+    width: '50%',
+    height: '50%',
+    display: "flex",
+    flexDirection:"column",
+    position:'none'
 };
 
 const MapContainer = (props) => {
@@ -17,30 +23,29 @@ const MapContainer = (props) => {
         new window.google.maps.Size(32, 32)
     );
     const [markers,setMarkers] = useState([]);
+    const [mymarkers,setMymarkers] = useState(props.location);
     const [place, setPlace] = useState({})
     const [showingInfoWindow, setShowingInfoWindow] = useState({})
     const [activeMarker, setActiveMarker] = useState({})
     const [selectedPlace, SetSelectedPlace] = useState({})
-
+    const history = useHistory();
+    const {lat,lng} = props.location
+    
     const mapClicked = async (mapProps, map, clickEvent) => {
         setShowingInfoWindow(false);
         setActiveMarker(null);
         
         console.log(clickEvent.latLng.lat())
         const position = {lat: clickEvent.latLng.lat(), lng: clickEvent.latLng.lng()};
+        setMymarkers(position)
+        
+        props.locating(position);
+        history.push('/order');
+
         const geocoder = new props.google.maps.Geocoder();
-        console.log(props)
         geocoder.geocode({ location: position }, (results, status) => {
             if (status === "OK") {
               if (results[0]) {
-                map.setZoom(11);
-                // const marker = new google.maps.Marker({
-                //   position: position,
-                //   map: map,
-                // });
-                // infowindow.setContent(results[0].formatted_address);
-                // infowindow.open(map, marker);
-                console.log(results)
               } else {
                 window.alert("No results found");
               }
@@ -59,20 +64,16 @@ const MapContainer = (props) => {
         console.log(props)
     }
     let mapTrack = ((props.latitude !== "") ?
-        <Map google={props.google} zoom={5} style={mapStyles} initialCenter={{ lat: 40.854885, lng: -88.081807 }} onClick={mapClicked}>
-            {markers.length > 0 ? 
-                markers.map((item,index) =>(
-                    <Marker key={index} onClick={onMarkerClick}
+        <Map google={props.google} style={{ width: '100%', height: '100%' }} zoom={10} initialCenter={{lat: lat, lng: lng}} onClick={mapClicked}>
+            {/* {markers.length > 0 ?  */}
+                {/* markers.map((item,index) =>( */}
+                    <Marker onClick={onMarkerClick}
                         icon={iconMarker}
                         name={'Current location'}
-                        position={{lat: item.lat, lng: item.lng}}
+                        position={{...mymarkers}}
                     />
-                )):null    
-        }
-            <Marker onClick={onMarkerClick}
-                icon={iconMarker}
-                name={'Current location'}
-            />
+        {/* //         )):null    
+        // } */}
             
                 <InfoWindow
                     marker={activeMarker}
@@ -84,9 +85,9 @@ const MapContainer = (props) => {
             </InfoWindow>
         </Map> : null)
     return (
-        <HocAux>
-            {mapTrack}
-        </HocAux>
+            <>
+                {mapTrack}
+            </>
     );
 };
 
@@ -94,7 +95,23 @@ MapContainer.propTypes = {
 
 };
 
-export default GoogleApiWrapper({
-    apiKey: ("AIzaSyAWYRtOnZTxF3nsRUBD-0bhvzeOiHcVI9E")
-})(MapContainer)
+const mapStateToProps = (state, ownProps) => {
+    return {
+        location: state.location
+    }
+}
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        locating: (location) => {
+            dispatch({type:"LOCATING",payload:{location:location}})
+        }
+    }
+}
+//  export default GoogleApiWrapper({
+//     apiKey: ("AIzaSyAWYRtOnZTxF3nsRUBD-0bhvzeOiHcVI9E")
+// })(MapContainer)
 
+const container =  GoogleApiWrapper({
+    apiKey: ("AIzaSyAWYRtOnZTxF3nsRUBD-0bhvzeOiHcVI9E")
+})(MapContainer);
+export default connect( mapStateToProps,mapDispatchToProps)(container);

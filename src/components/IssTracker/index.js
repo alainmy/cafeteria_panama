@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import Axios from 'axios';
 import MapContainer from '../MapContainer/index'
+import { Grid, Paper } from '@material-ui/core';
 
 
 const IssTracker = ({}) => {
@@ -14,7 +15,7 @@ const IssTracker = ({}) => {
           Axios.get("https://api.wheretheiss.at/v1/satellites/25544.json")
           .then(response => {
             setTrackerState({
-              issInfo:{velocity:response.data.velocity, latitude:response.data.latitude, longitude:response.data.longitude},
+              issInfo:{ velocity:response.data.velocity, latitude:response.data.latitude, longitude:response.data.longitude },
               error: false,
             })
           })
@@ -27,9 +28,11 @@ const IssTracker = ({}) => {
         }, 1000);
       });
     return (
-        <div id="simple-modal-title">
-            <MapContainer velocity= {trackerState.issInfo.velocity} latitude= {trackerState.issInfo.latitude} longitude= {trackerState.issInfo.longitude}/>
-        </div>
+            <Grid container spacing = {2}>
+              <Grid item lg={12}>
+                <MapContainer velocity= {trackerState.issInfo.velocity} latitude= {trackerState.issInfo.latitude} longitude= {trackerState.issInfo.longitude}/> 
+              </Grid>
+            </Grid>
     );
 };
 

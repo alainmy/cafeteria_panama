@@ -14,7 +14,12 @@ import { CssBaseline, makeStyles } from '@material-ui/core';
 const App = () => {
   
     return (
-          <Layout/>
+        <div>
+            <Container maxWidth = "md">
+            <Layout/>
+        </Container>
+        </div>
+          
     );
   
 }
