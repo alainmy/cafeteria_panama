@@ -14,7 +14,12 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
     },
     paper: {
-        background:'#ffb74d',
+        // background:'#FAD7A0',
+        width:'100%',
+        marginBottom: theme.spacing(3)
+    },
+    paperOrder: {
+       // background:'#FAD7A0',
         width:'100%',
         marginBottom: theme.spacing(3)
     },
@@ -24,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
         display:'flex',
         flexDirection:'column',
         justifyContent:'space-between',
-        color:'white'
     },
     subheader:{
         width:'100%',
@@ -32,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
         display:'flex',
         flexDirection:'row',
         justifyContent:'space-between',
+        alignItems:'center',
         color:'white'
     },
     address:{
@@ -42,8 +47,15 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     orderButtom:{
-        color:'#ffb74d',
-        backgroundColor: '#fff'
+        color:'black',
+        backgroundColor: '#ff9800',
+    },
+    span:{
+        //backgroundColor: '#ff9800',
+        //color:'',
+        padding:theme.spacing(1),
+        fontWeight:'normal',
+        borderRadius:'4px'
     }
 }));
 const ItemsOrder = (props) => {
@@ -72,9 +84,11 @@ const ItemsOrder = (props) => {
                                 <DefaultAdrees />
                             </div>
                         </Paper>
-                        <Paper className={classes.paper} elevation = {0}>
+                        <Paper className={classes.paperOrder} elevation = {0}>
                             <div className = {classes.subheader}>
-                                <Typography variant="h6" color="primary"> ${props.order.priceTotal} </Typography>
+                                <Typography variant="h6" color="primary"> Precio Total: <span className={classes.span}>
+                                        ${props.order.priceTotal}
+                                    </span> </Typography>
                                 <Button variant="contained" color="primary" className={classes.orderButtom} component = {RouterLink} to ="/full-order">
                                     Ordenar
                                 </Button>

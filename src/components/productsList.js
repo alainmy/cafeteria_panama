@@ -12,27 +12,29 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Button, Grid, Container, ListSubheader, Menu, MenuItem, makeStyles, Paper } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
+import Categories from './Categories/index.js';
 
 const useStyles = makeStyles((theme) => ({
     margin: {
       margin: `${theme.spacing(1)}px !important`,
     },
     background: {
-        backgroundColor:'#ffb74d' ,
-        '& :hover':{
-            backgroundColor:'#fff' ,
-            color:'#ffb74d'
+        border:'1px solid #fff',
+        backgroundColor:'#fff' ,
+        '&:hover':{
+            border:'1px solid white',
+            color:'#fff'
         },
         '& :visited':{
             backgroundColor:'#fff' ,
-            color:'#ffb74d'
+            color:'#fff'
         }
     },
     paper: {
-        background:'#ffb74d',
+      //  background:'#ffb74d',
         width:'100%',
-        marginBottom: theme.spacing(3),
-        color:'#fff'
+        marginBottom: theme.spacing(1),
+        //color:'#fff'
     },
     extendedIcon: {
       marginRight: theme.spacing(1),
@@ -62,23 +64,12 @@ function ProductList(props) {
             <Grid container justifyContent="center" spacing={2}>
                 <Grid item sm={12}>
                     <div>
-                            {!props.context.list.loading ?
-                                categories.map((item, index) => (
-                                    <Button
-                                        className={`${classes.margin} ${classes.background}`}
-                                        key={`${item}-${index}`}
-                                        size="small"
-                                        variant="outlined"
-                                        color="primary"
-                                        onClick={event => handleClose(item)}
-                                        >
-                                        {item}
-                                    </Button>
-                                    
-                                )) :
-                                <p>Loading ..</p>
-                            }
-                        {/* </Menu> */}
+                            <Categories 
+                                categories = {categories} 
+                                loading = {props.context.list.loading}
+                                classes = {classes}
+                                handleClose = {handleClose}
+                            />
                     </div>
                     <List sx={{ width: '100%', bgcolor: 'background.paper' }}
                         subheader={

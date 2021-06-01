@@ -71,6 +71,9 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
   },
+  bageContent: {
+    background:'#fff'
+  },
 }));
 
 const ScrollTop = (props) => {
@@ -134,7 +137,7 @@ export default function Layout(props) {
                 handleFilter = {list.handleFilter} 
                 categories = {list.categories} 
                 loading = {loading}
-                classes = {{appBar:classes.appBar,menuButton:classes.menuButton,sectionDesktop:classes.sectionDesktop,grow:classes.grow}}
+                classes = {{appBar:classes.appBar,menuButton:classes.menuButton,sectionDesktop:classes.sectionDesktop,grow:classes.grow,bageContent:classes.bageContent}}
               />
               <div className={classes.drawerHeader} />
               <Grid container spacing={4}>

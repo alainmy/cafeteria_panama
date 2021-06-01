@@ -17,15 +17,16 @@ const useStyles = makeStyles((theme) => ({
     toolbarLink: {
         padding: theme.spacing(1),
         flexShrink: 0,
-        color: 'white',
+        color: 'black',
+        fontWeight:'bold',
         textDecoration: 'none'
     },
     noBackground: {
         background: 'inherit',
     },
     background: {
-        background: 'white',
-        color: '#ff9800',
+        background: 'black',
+        color: '#fff',
         border: '1px solid #ff9800',
         borderRadius: '4px'
     },

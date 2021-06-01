@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Container, Button, Card, CardContent, CardHeader, Checkbox, Divider, FormControl, FormControlLabel, Grid, Input, InputAdornment, InputLabel, makeStyles, OutlinedInput, Paper, Radio, RadioGroup, Select, Typography, CircularProgress, CardMedia, CardActionArea, CardActions } from '@material-ui/core';
+import { Container, Button, Card, CardContent, CardHeader, Checkbox, Divider, FormControl, FormControlLabel, Grid, Input, InputAdornment, InputLabel, makeStyles, OutlinedInput, Paper, Radio, RadioGroup, Select, Typography, CircularProgress, CardMedia, CardActionArea, CardActions, ButtonGroup, Avatar } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import PersonIcon from '@material-ui/icons/Person';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
@@ -20,6 +20,20 @@ const useStyles = makeStyles((theme) => ({
         flexWrap: 'nowrap'
         // alignItems:'çenter'
     },
+    headerContent: {
+        display: 'flex',
+        flexDirection: 'row',
+        padding: theme.spacing(1),
+        [theme.breakpoints.down('xs')]: {
+            flexDirection: 'column',
+        },
+    },
+    headerContentDesc: {
+        display: 'flex',
+        flexDirection: 'column',
+        padding: theme.spacing(1),
+
+    },
     margin: {
         margin: theme.spacing(1)
     },
@@ -35,7 +49,8 @@ const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
         padding: theme.spacing(2, 1),
-        border: '1px solid ThreeDLightShadow'
+       // border: '1px solid black',
+        borderRadius: '4px'
     },
     label: {
         margin: theme.spacing(1),
@@ -43,14 +58,14 @@ const useStyles = makeStyles((theme) => ({
         // border: '1px solid ThreeDLightShadow'
     },
     title: {
-        color:'#ff9800'
-        //border: '1px solid ThreeDLightShadow'
+        fontWeight: 'bold'
+
     },
     GroupFields: {
         marginBottom: theme.spacing(1),
-        backgroundColor:'#ffb74d' ,
+        // backgroundColor:'#ffb74d' ,
         padding: theme.spacing(2, 1),
-        color:'#fff'
+        // color:'#ffb74d'
         //border: '1px solid ThreeDLightShadow'
     },
     subtitle: {
@@ -59,25 +74,41 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 'bold'
     },
     subtitle1: {
-        marginLeft: `${theme.spacing(1)} !important`,
-        textAlign: 'left'
+        marginLeft: `${theme.spacing(1)}px !important`,
+        textAlign: 'left',
+        fontWeight: 'bold'
     },
     subtitle2: {
         marginLeft: theme.spacing(1),
         textAlign: 'left',
         fontWeight: 'blold'
     },
-    buttom:{
-        color:'#fff'
-    }
+    buttom: {
+        color: '#black'
+    },
+    cancelCuttom: {
+        color: '#f44336'
+    },
+    large: {
+        width: theme.spacing(15),
+        height: theme.spacing(15),
+        marginRight: theme.spacing(2)
+    },
+    actions: {
+        width:'100%',
+        padding:theme.spacing(1),
+        display:'flex',
+        justifyContent:'end'
+
+    },
 
 }));
 const ItemPurshage = (props) => {
     const defaultData = {
-        id:props.itemsCount,
+        id: props.itemsCount,
         _iditem: null,
-        name:null,
-        _filename:null,
+        name: null,
+        _filename: null,
         price: 0.0,
         _idadds: {},
         count: 1,
@@ -121,7 +152,28 @@ const ItemPurshage = (props) => {
         setForm({
             ...form,
             [name]: target.value,
-            ['price']: name === 'count' ? item.price * parseInt(target.value) : item.price
+            ['price']: name === 'count' ? item.price * target.value : item.price
+
+        });
+    }
+    const handleIncrement = (event) => {
+        const target = event.target;
+        const name = target.name;
+        debugger
+        setForm({
+            ...form,
+            [name]: target.value,
+            ['price']: name === 'count' ? item.price * form[name] + 1 : item.price
+
+        });
+    }
+    const handleDrecrement = (event) => {
+        const target = event.target;
+        const name = target.name;
+        setForm({
+            ...form,
+            [name]: target.value,
+            ['price']: name === 'count' ? item.price * target.value : item.price
 
         });
     }
@@ -136,50 +188,58 @@ const ItemPurshage = (props) => {
     }
     console.log(form)
     const submitForm = () => {
-        props.dispatch({type:'ADD_ITEM',form})
+        props.dispatch({ type: 'ADD_ITEM', form })
         history.push('/');
     }
     return (
         <Grid container spacing={2}>
             <Grid item lg={12}>
-            {!loading ? (
-                <>
-                    <Card className={classes.root} elevation={0}>
-                        
-                            <CardMedia
-                                component="img"
-                                alt="Contemplative Reptile"
-                                height="200"
-                                image={`https://backend.nelosoftt.com/image/${item._filename}`}
-                                title="Contemplative Reptile"
-                            />
+                {!loading ? (
+                    <>
+                        <Card className={classes.root} elevation={0}>
                             <CardContent>
-                                <Typography gutterBottom variant="h5" component="h2" className={classes.title} >
-                                    {item.name}
-                                </Typography>
-                                <Typography variant="body2" component="p" gutterBottom style = {{marginBottom:40}} className={classes.title}>
-                                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                                    across all continents except Antarctica
-                                </Typography>
-
+                                <div className={classes.headerContent}>
+                                    <Avatar alt="Remy Sharp" src={`https://backend.nelosoftt.com/image/${item._filename}`} className={classes.large} />
+                                    {/* <CardMedia
+                                    component="img"
+                                    alt="Remy Sharp"
+                                    height="200"
+                                    image={`https://backend.nelosoftt.com/image/${item._filename}`}
+                                    title="Contemplative Reptile"
+                                    /> */}
+                                    <div className={classes.headerContentDesc}>
+                                        <Typography gutterBottom variant="subtitle1" component="h2" className={classes.title} >
+                                            {item.name}
+                                        </Typography>
+                                        <Typography variant="caption" component="p" gutterBottom >
+                                            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                                            across all continents except Antarctica
+                                    </Typography>
+                                    </div>
+                                </div>
+                                <Divider />
                                 <form action="" method="POST" onSubmit={submitForm}>
                                     <div className={classes.GroupFields} >
-                                        <Typography variant='subtitle1' component='span' className={classes.subtitle1}>
+                                        {/* <Typography variant='subtitle2' component='span' className={classes.subtitle1}>
                                             Cantidad de Unidades
-                                        </Typography>
-                                        <div className={`${classes.formGroup}`}>
-                                            <input
-                                                value={form.count}
-                                                onChange={handleChange}
-                                                type="text"
-                                                name="count"
-                                                className={classes.formControl}
-                                                placeholder="Cantidad de Unidades"
-                                                id="count" />
+                                        </Typography> */}
+                                        <div className={`${classes.formGroup} ${classes.margin}`}>
+                                        <TextField
+                                                        id={`count`}
+                                                        label={`Cantidad de Unidades`}
+                                                        type="number"
+                                                        name={`count`}
+                                                        value={form.count}
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
+                                                        onChange={handleChange}
+                                                    />
+
                                         </div>
                                     </div>
                                     <div className={classes.GroupFields}>
-                                        <Typography variant='subtitle1' component='span' className={classes.subtitle1}>
+                                        <Typography variant='subtitle2' component='span' className={classes.subtitle1}>
                                             Agregos
                                         </Typography>
                                         {
@@ -203,9 +263,9 @@ const ItemPurshage = (props) => {
                                         }
                                     </div>
                                     <div className={classes.GroupFields}>
-                                        <Typography variant='subtitle1' component='span' className={classes.subtitle1}>
+                                        {/* <Typography variant='subtitle2' component='span' className={classes.subtitle1}>
                                             Mensage
-                                        </Typography>
+                                        </Typography> */}
                                         <div className={classes.formGroup}>
                                             <textarea
                                                 value={form.Message}
@@ -220,26 +280,28 @@ const ItemPurshage = (props) => {
                                 </form>
 
                             </CardContent>
-                       
-                        <CardActions>
-                            <Button size = "small" variant="contained" color = "secondary" className = {classes.buttom}>
-                                Cancelar
-                            </Button>
-                            <Button size = "small" onClick={submitForm} variant="contained" color = "secondary" className = {classes.buttom}>
-                                Pedir
-                            </Button>
-                        </CardActions>
-                    </Card>
 
-                </>) : (
-                <>
-                    <div>
-                        <CircularProgress />
-                        <CircularProgress color="secondary" />
-                    </div>
-                </>
-            )
-            }
+                            <CardActions>
+                                <div className={classes.actions}>
+                                <Button className={classes.cancelCuttom}>
+                                    Cancelar
+                                </Button>
+                                <Button onClick={submitForm} variant="contained" color="secondary" className={classes.buttom}>
+                                    Pedir
+                                </Button>
+                                </div>
+                            </CardActions>
+                        </Card>
+
+                    </>) : (
+                    <>
+                        <div>
+                            <CircularProgress />
+                            <CircularProgress color="secondary" />
+                        </div>
+                    </>
+                )
+                }
             </Grid>
         </Grid>
     );
@@ -256,7 +318,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         dispatch1: (data) => {
-            dispatch({type:'ADD_ITEM',payload:{form:data}})
+            dispatch({ type: 'ADD_ITEM', payload: { form: data } })
         }
     }
 }

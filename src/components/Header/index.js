@@ -52,7 +52,7 @@ const Header = (props) => {
           menu = {menu}/>
         <div className={classes.sectionDesktop}>
           <IconButton aria-label="show 17 new notifications" color="inherit" to={`/order`} component={RouterLink}>
-            <Badge badgeContent={props.itemsCount} color="secondary">
+            <Badge badgeContent={props.itemsCount} color="primary">
               <ShoppingCartIcon />
             </Badge>
           </IconButton>
