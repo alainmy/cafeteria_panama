@@ -14,7 +14,7 @@ import { CssBaseline, makeStyles } from '@material-ui/core';
 const App = () => {
   
     return (
-        <div>
+        <div style={{background:'lightgrey'}}>
             <Container maxWidth = "md">
             <Layout/>
         </Container>

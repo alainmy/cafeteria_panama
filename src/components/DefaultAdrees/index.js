@@ -83,8 +83,8 @@ const DefaultAdrees = (props) => {
                     name="address"
                     value={address}
                     startAdornment={
-                        <IconButton style={{color:'white'}} position="start" component = {RouterLink} to ="/edit-address">
-                            <LocationOnOutlinedIcon />
+                        <IconButton position="start" component = {RouterLink} to ="/edit-address">
+                            <LocationOnOutlinedIcon color="primary"/>
                         </IconButton>
                     }
                 />

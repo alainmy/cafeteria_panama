@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   paper:{
     display:'flex',
     flexDirection:'column',
+    justifyContent:'center',
     padding:theme.spacing(2),
     //alignItems:'center'
   },
@@ -22,39 +23,51 @@ const useStyles = makeStyles((theme) => ({
     display:'flex',
     flexDirection:'row',
     justifyContent:'space-between',
-    padding:theme.spacing(2),
+    padding:theme.spacing(1),
     alignItems:'center',
     [theme.breakpoints.down('xs')]: {
-      flexDirection:'column',
-      justifyContent:'space-between',
-      alignItems:'center'
+      // flexDirection:'column',
+      // justifyContent:'space-between',
+      // alignItems:'center'
   },
   },
   headerAvatar:{
     display:'flex',
     flexDirection:'column',
+    alignItems:'start',
     
   },
   headerDesc:{
     width:'100%',
     display:'flex',
+    flexDirection:'column',
     justifyContent:'space-between',
-    alignItems:'center',
-    marginLeft:theme.spacing(2),
+    marginLeft:theme.spacing(1),
     [theme.breakpoints.down('xs')]: {
-      alignItems:'center',
+     // alignItems:'center',
+  },
+  },
+  headerFunc:{
+    width:'100%',
+    display:'flex',
+    flexDirection:'column',
+    justifyContent:'space-between',
+    alignItems:'end',
+    marginLeft:theme.spacing(1),
+    [theme.breakpoints.down('xs')]: {
+     // alignItems:'center',
   },
   },
   paperContent:{
     display:'flex',
     flexDirection:'column',
-    padding:theme.spacing(2)
+    padding:theme.spacing(1)
   },
   paperActions:{
     width:'100%',
     display:'flex',
     flexDirection:'column',
-    padding:theme.spacing(2),
+    padding:theme.spacing(1),
     justifyContent:'flex-end'
   },
   inline: {
@@ -77,7 +90,12 @@ const useStyles = makeStyles((theme) => ({
   },
   add:{
     fontWeight:'bold'
-  }
+  },
+  large: {
+    width: theme.spacing(10),
+    height: theme.spacing(10),
+    marginRight: theme.spacing(2)
+},
 }));
 
 export default function ItemOrder(props) {
@@ -94,21 +112,19 @@ export default function ItemOrder(props) {
       }
   }
   return (
-    // <Link component={RouterLink}}>
-      
-    // <Grid container justify='center' alignItems='center' spacing={2}>
-    //   <Grid item xs = {12} md = {12}>
         <div className={classes.paper}>
             <div className={classes.paperHeader}>
               <div className={classes.headerAvatar}>
-                <Avatar alt="Remy Sharp" src={`https://backend.nelosoftt.com/image/${props.item._filename}`} />
+                <Avatar alt="Remy Sharp" src={`https://backend.nelosoftt.com/image/${props.item._filename}`} className={classes.large} />
               </div>
               
               <div className = {classes.headerDesc}>
                 <Typography variant="h6" color="primary" >{`${props.item.name}(${props.item.count})`}</Typography>
-                <Typography variant="body2" color="primary" className = {classes.price}>{`$${props.item.price} `}</Typography>
+                <Typography variant="body2" color="primary">{`$${props.item.price} `}</Typography>
+              </div>
+              <div className = {classes.headerFunc}>
                 <IconButton aria-label="delete" color = 'error'>
-                  <DeleteIcon />
+                  <DeleteIcon color = 'error'/>
                 </IconButton>
               </div>
             </div>
@@ -133,10 +149,5 @@ export default function ItemOrder(props) {
               }
             
         </div>
-      // </Grid>
-      // </Grid>
-     
-   
-
   );
 }
