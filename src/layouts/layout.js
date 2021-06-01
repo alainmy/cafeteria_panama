@@ -16,14 +16,18 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import ProductList from '../components/productsList';
 import { ListsContext } from '../Context/ItemsContextProvider';
 import ItemsContextProvider from '../Context/ItemsContextProvider';
-import { Button, Drawer } from '@material-ui/core';
+import { Button, Drawer, Grid } from '@material-ui/core';
 import drawer from '../components/DrawerLeft/index';
 import Hidden from '@material-ui/core/Hidden';
 import { useTheme } from '@emotion/react';
 import DrawerNav from '../components/DrawerLeft/DrawerNav';
 import ItemPurshage from '../components/productItem/ItemPurshage';
 import ItemsOrder from '../components/ItemsOrder';
+import Order from '../Views/Order';
+import IssTracker from '../components/IssTracker';
+import SubHeaderProduct from '../components/SubHeaderProduct';
 const drawerWidth = 240;
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -32,12 +36,14 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    width:'100%',
+    // width:'100%',
+    // height:'100%',
     background:'lightgrey'
   },
   appBar: {
+    background:'#ff9800',
     [theme.breakpoints.up('sm')]: {
-      width: `calc(100% - ${drawerWidth}px) !important`,
+     // width: `calc(100% - ${drawerWidth}px) !important`,
       marginLeft: `${drawerWidth}px !important`,
     },
   },
@@ -57,7 +63,14 @@ const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
-  
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(4, 4),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+  },
 }));
 
 const ScrollTop = (props) => {
@@ -113,9 +126,8 @@ export default function Layout(props) {
   return ( 
       <ItemsContextProvider>
         <ListsContext.Consumer>
-          {(list, loading,filter, handleFilter,categories,error) => (
-            <div className={classes.root}>
-               
+          {(list, loading,filter, handleFilter,categories,error) => (   
+            <>            
               <CssBaseline />
               <Header 
                 onClick={() => handleDrawerToggle()} 
@@ -124,28 +136,31 @@ export default function Layout(props) {
                 loading = {loading}
                 classes = {{appBar:classes.appBar,menuButton:classes.menuButton,sectionDesktop:classes.sectionDesktop,grow:classes.grow}}
               />
-              <DrawerNav mobileOpen={mobileOpen} handleDrawerToggle={() => handleDrawerToggle()} container = {container}/>
+              <div className={classes.drawerHeader} />
+              <Grid container spacing={4}>
+                <Grid item md = {12}>
+                  {/* Subheader */}
+                  
+                  {/* <SubHeaderProduct /> */}
+                </Grid>
+              </Grid>
+              {/* <DrawerNav mobileOpen={mobileOpen} handleDrawerToggle={() => handleDrawerToggle()} container = {container}/> */}
               {/* <Toolbar id="back-to-top-anchor" /> */}
-              <main className={classes.content}>
-                <div className={classes.toolbar} />
+             
                 <Switch>
                   {list.error === '' ?
                     <>
-                      <Route exact path='/' render={props => list && <ProductList context={{ list }} {...props} />} />
+                      <Route exact path='/ordenar' render={props => list && <ProductList context={{ list }} {...props} />} />
                       <Route exact path='/:id/items' render={props => list && <ItemPurshage item={{ list }} {...props} />} />
                       <Route exact path='/order' component ={ItemsOrder} />
+                      <Route exact path='/full-order' component ={Order} />
+                      <Route exact path='/edit-address' component ={IssTracker} />
                       
                     </>:
                     <p>{list.error}</p>
                   }
                 </Switch>
-              </main>
-              {/* <ScrollTop {...props}>
-                <Fab color="secondary" size="small" aria-label="scroll back to top">
-                  <KeyboardArrowUpIcon />
-                </Fab>
-              </ScrollTop> */}
-            </div>
+            </>
           )}
         </ListsContext.Consumer>
       </ItemsContextProvider>

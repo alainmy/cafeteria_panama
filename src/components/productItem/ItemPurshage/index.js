@@ -42,15 +42,16 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2, 1),
         // border: '1px solid ThreeDLightShadow'
     },
-    GroupFields: {
-        marginBottom: theme.spacing(1),
-        // padding: theme.spacing(2, 1),
+    title: {
+        color:'#ff9800'
         //border: '1px solid ThreeDLightShadow'
     },
-    buttonSubmit: {
-        width: '288px',
-        borderRadius: 0,
-        margin: theme.spacing(4, 1),
+    GroupFields: {
+        marginBottom: theme.spacing(1),
+        backgroundColor:'#ffb74d' ,
+        padding: theme.spacing(2, 1),
+        color:'#fff'
+        //border: '1px solid ThreeDLightShadow'
     },
     subtitle: {
         margin: theme.spacing(1),
@@ -66,13 +67,8 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'left',
         fontWeight: 'blold'
     },
-    dropzone: {
-        marginTop: '24px',
-        marginBottom: '16px',
-        opacity: 0.5,
-        '& p': {
-            fontSize: '0.875rem'
-        }
+    buttom:{
+        color:'#fff'
     }
 
 }));
@@ -144,7 +140,8 @@ const ItemPurshage = (props) => {
         history.push('/');
     }
     return (
-        <Container maxWidth="md">
+        <Grid container spacing={2}>
+            <Grid item lg={12}>
             {!loading ? (
                 <>
                     <Card className={classes.root} elevation={0}>
@@ -152,22 +149,22 @@ const ItemPurshage = (props) => {
                             <CardMedia
                                 component="img"
                                 alt="Contemplative Reptile"
-                                height="140"
+                                height="200"
                                 image={`https://backend.nelosoftt.com/image/${item._filename}`}
                                 title="Contemplative Reptile"
                             />
                             <CardContent>
-                                <Typography gutterBottom variant="h5" component="h2">
+                                <Typography gutterBottom variant="h5" component="h2" className={classes.title} >
                                     {item.name}
                                 </Typography>
-                                <Typography variant="body2" color="textSecondary" component="p" gutterBottom style = {{marginBottom:40}}>
+                                <Typography variant="body2" component="p" gutterBottom style = {{marginBottom:40}} className={classes.title}>
                                     Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
                                     across all continents except Antarctica
                                 </Typography>
 
                                 <form action="" method="POST" onSubmit={submitForm}>
-                                    <div className={classes.GroupFields} style={{ background: 'rgb(246, 247, 249)' }}>
-                                        <Typography variant='h6' component='span' className={classes.subtitle1}>
+                                    <div className={classes.GroupFields} >
+                                        <Typography variant='subtitle1' component='span' className={classes.subtitle1}>
                                             Cantidad de Unidades
                                         </Typography>
                                         <div className={`${classes.formGroup}`}>
@@ -181,8 +178,8 @@ const ItemPurshage = (props) => {
                                                 id="count" />
                                         </div>
                                     </div>
-                                    <div className={classes.GroupFields} style={{ background: 'rgb(246, 247, 249)' }}>
-                                        <Typography variant='h6' component='span' className={classes.subtitle1}>
+                                    <div className={classes.GroupFields}>
+                                        <Typography variant='subtitle1' component='span' className={classes.subtitle1}>
                                             Agregos
                                         </Typography>
                                         {
@@ -205,8 +202,8 @@ const ItemPurshage = (props) => {
                                             ))
                                         }
                                     </div>
-                                    <div className={classes.GroupFields} style={{ background: 'rgb(246, 247, 249)' }}>
-                                        <Typography variant='h6' component='span' className={classes.subtitle1}>
+                                    <div className={classes.GroupFields}>
+                                        <Typography variant='subtitle1' component='span' className={classes.subtitle1}>
                                             Mensage
                                         </Typography>
                                         <div className={classes.formGroup}>
@@ -225,10 +222,10 @@ const ItemPurshage = (props) => {
                             </CardContent>
                        
                         <CardActions>
-                            <Button size="small" color="primary">
+                            <Button size = "small" variant="contained" color = "secondary" className = {classes.buttom}>
                                 Cancelar
                             </Button>
-                            <Button size="small" color="primary" onClick={submitForm}>
+                            <Button size = "small" onClick={submitForm} variant="contained" color = "secondary" className = {classes.buttom}>
                                 Pedir
                             </Button>
                         </CardActions>
@@ -243,7 +240,8 @@ const ItemPurshage = (props) => {
                 </>
             )
             }
-        </Container>
+            </Grid>
+        </Grid>
     );
 };
 

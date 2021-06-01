@@ -1,18 +1,11 @@
 
 import * as React from 'react';
-import { experimentalStyled as styled } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
 import IconButton, { IconButtonProps } from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { Avatar, Button, Chip, Divider, Grid, ListItem, ListItemAvatar, ListItemText, makeStyles, Paper } from '@material-ui/core';
+import { Avatar, Button, Chip, Divider, Grid, makeStyles, Paper } from '@material-ui/core';
 import { Link as RouterLink, useRouteMatch } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
 
+import DeleteIcon from '@material-ui/icons/Delete';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -22,23 +15,35 @@ const useStyles = makeStyles((theme) => ({
   paper:{
     display:'flex',
     flexDirection:'column',
-    padding:theme.spacing(2)
+    padding:theme.spacing(2),
+    //alignItems:'center'
   },
   paperHeader:{
     display:'flex',
     flexDirection:'row',
+    justifyContent:'space-between',
     padding:theme.spacing(2),
+    alignItems:'center',
+    [theme.breakpoints.down('xs')]: {
+      flexDirection:'column',
+      justifyContent:'space-between',
+      alignItems:'center'
+  },
   },
   headerAvatar:{
     display:'flex',
     flexDirection:'column',
+    
   },
   headerDesc:{
     width:'100%',
     display:'flex',
-    flexDirection:'row',
     justifyContent:'space-between',
+    alignItems:'center',
     marginLeft:theme.spacing(2),
+    [theme.breakpoints.down('xs')]: {
+      alignItems:'center',
+  },
   },
   paperContent:{
     display:'flex',
@@ -66,12 +71,19 @@ const useStyles = makeStyles((theme) => ({
   },
   ChipMarginBottom:{
    margin:theme.spacing(0.5),
+  },
+  price:{
+    fontWeight:'bold'
+  },
+  add:{
+    fontWeight:'bold'
   }
 }));
 
 export default function ItemOrder(props) {
   const classes = useStyles();
   const item = props.item;
+  const keys = item._idadds ? Object.keys(props.item._idadds) : [];
   let match = useRouteMatch();
   console.log(props)
 
@@ -84,8 +96,8 @@ export default function ItemOrder(props) {
   return (
     // <Link component={RouterLink}}>
       
-    <Grid container justifyContent="center" spacing={2}>
-    <Grid item sm={12}>
+    // <Grid container justify='center' alignItems='center' spacing={2}>
+    //   <Grid item xs = {12} md = {12}>
         <div className={classes.paper}>
             <div className={classes.paperHeader}>
               <div className={classes.headerAvatar}>
@@ -93,37 +105,36 @@ export default function ItemOrder(props) {
               </div>
               
               <div className = {classes.headerDesc}>
-                <Typography variant="subtitle1" color="initial" fontWeight='bold' >{`${props.item.name}(${props.item.count})`}</Typography>
-                <Typography variant="subtitle1" color="initial" fontWeight='bold' >{`$${props.item.price} `}</Typography>
+                <Typography variant="h6" color="primary" >{`${props.item.name}(${props.item.count})`}</Typography>
+                <Typography variant="body2" color="primary" className = {classes.price}>{`$${props.item.price} `}</Typography>
+                <IconButton aria-label="delete" color = 'error'>
+                  <DeleteIcon />
+                </IconButton>
               </div>
             </div>
-            <Divider />
-            {props.item._idadds ? (
+            
+            {keys.length > 0 ? (
                 <>
+                  <Divider />
                   <div className={classes.paperContent}>
-                    <Typography variant="body2" color="initial" gutterBottom>Agregos:</Typography>
+                    <Typography variant="body2" color="primary" gutterBottom className = {classes.add}>Agregos:</Typography>
                     <div className= {classes.addsBox}>
                       
                           {Object.keys(props.item._idadds).map((item) => (
-                              <Chip size="small" label={item} variant="outlined" className={classes.ChipMarginBottom}/>
+                              <Typography variant="caption" color="primary"> {item}, </Typography>
+                              // <Chip size="small" label={item} variant="outlined" className={classes.ChipMarginBottom}/>
                               ))
                           }
                       
                     </div>
                   </div>
-                  <Divider />
               </>
               ):null
               }
-              <div className ={classes.paperActions}>
-                <Button size="small" color="error" variant="contained" disableElevation>
-                    Eliminar
-                </Button>
-              </div>
             
         </div>
-      </Grid>
-      </Grid>
+      // </Grid>
+      // </Grid>
      
    
 

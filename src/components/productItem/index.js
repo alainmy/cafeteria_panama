@@ -57,16 +57,25 @@ export default function RecipeReviewCard(props) {
                 component="span"
                 variant="body2"
                 className={classes.inline }
-                color="textPrimary"
+                color="primary"
               >
                 Ali Connors
               </Typography>
+              <Typography
+                component="span"
+                variant="caption"
+                className={classes.inblock }
+                color="primary"
+              >
+
               {" — I'll be in your neighborhood doing errands this…"}
+              </Typography>
+              
               <Typography
                 component="span"
                 variant="body2"
                 className={classes.inblock }
-                color="textPrimary"
+                color="primary"
               >
                 <b>price:</b> ${item.price}
               </Typography>

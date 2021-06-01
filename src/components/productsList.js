@@ -9,13 +9,30 @@ import Typography from '@material-ui/core/Typography';
 import { getItems } from '../actions/index.js';
 import ProductItem from './productItem/index.js';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Button, Grid, Container, ListSubheader, Menu, MenuItem, makeStyles } from '@material-ui/core';
+import { Button, Grid, Container, ListSubheader, Menu, MenuItem, makeStyles, Paper } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme) => ({
     margin: {
       margin: `${theme.spacing(1)}px !important`,
+    },
+    background: {
+        backgroundColor:'#ffb74d' ,
+        '& :hover':{
+            backgroundColor:'#fff' ,
+            color:'#ffb74d'
+        },
+        '& :visited':{
+            backgroundColor:'#fff' ,
+            color:'#ffb74d'
+        }
+    },
+    paper: {
+        background:'#ffb74d',
+        width:'100%',
+        marginBottom: theme.spacing(3),
+        color:'#fff'
     },
     extendedIcon: {
       marginRight: theme.spacing(1),
@@ -41,14 +58,14 @@ function ProductList(props) {
         }
     };
     return (
-        <Container maxWidth="md">
+        
             <Grid container justifyContent="center" spacing={2}>
                 <Grid item sm={12}>
                     <div>
                             {!props.context.list.loading ?
                                 categories.map((item, index) => (
                                     <Button
-                                        className={classes.margin}
+                                        className={`${classes.margin} ${classes.background}`}
                                         key={`${item}-${index}`}
                                         size="small"
                                         variant="outlined"
@@ -75,11 +92,14 @@ function ProductList(props) {
                             items.map((item, index) =>
                             (
                                 <div key={`${item}-${item._id}`} >
-                                    <>
+                                    {/* <>
                                             <ProductItem to={`${item._id}/items`} item={item} index={index} />
                                     </>
                                     
-                                    <Divider />
+                                    <Divider /> */}
+                                    <Paper key={`${item}-${item._id}`} className={classes.paper} elevation = {0}>
+                                        <ProductItem to={`${item._id}/items`} item={item} index={index} />
+                                    </Paper>
                                 </div>
                             )
                             ) : <p>Loading ....</p>
@@ -87,7 +107,7 @@ function ProductList(props) {
                     </List>
                 </Grid>
             </Grid>
-        </Container>
+       
     );
 
 }

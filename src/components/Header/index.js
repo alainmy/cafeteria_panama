@@ -2,9 +2,33 @@ import React from 'react';
 import { AppBar, Badge, Button, IconButton, Toolbar } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-
+import { Link as RouterLink, useRouteMatch } from 'react-router-dom';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { connect } from 'react-redux';
+import Menu from '../Menu';
+
+const menu = [
+  {
+      name: "Incicio",
+      url: "incio",
+      class: 'noBackground'
+  },
+  {
+      name: "Quines Somos",
+      url: "quienes-somos",
+      class: 'noBackground'
+  },
+  {
+      name: "Contactenos",
+      url: "contactenos",
+      class: 'noBackground'
+  },
+  {
+      name: "ORDENAR",
+      url: "ordenar",
+      class: 'background'
+  },
+]
 
 const Header = (props) => {
   const classes = props.classes;
@@ -12,7 +36,7 @@ const Header = (props) => {
   const menuId = 'primary-search-account-menu';
   return (
 
-    <AppBar position="fixed" className={classes.appBar}>
+    <AppBar className={classes.appBar}>
       <Toolbar>
         <IconButton
           color="inherit"
@@ -24,27 +48,14 @@ const Header = (props) => {
           <MenuIcon />
         </IconButton>
         <div className={classes.grow} />
+        <Menu 
+          menu = {menu}/>
         <div className={classes.sectionDesktop}>
-          {/* <IconButton aria-label="show 4 new mails" color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <MailIcon />
-            </Badge>
-          </IconButton> */}
-          <IconButton aria-label="show 17 new notifications" color="inherit">
+          <IconButton aria-label="show 17 new notifications" color="inherit" to={`/order`} component={RouterLink}>
             <Badge badgeContent={props.itemsCount} color="secondary">
               <ShoppingCartIcon />
             </Badge>
           </IconButton>
-          {/* <IconButton
-            edge="end"
-            aria-label="account of current user"
-            aria-controls={menuId}
-            aria-haspopup="true"
-            // onClick={handleProfileMenuOpen}
-            color="inherit"
-          >
-            <AccountCircle />
-          </IconButton> */}
         </div>
       </Toolbar>
     </AppBar>
