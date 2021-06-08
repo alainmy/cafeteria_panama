@@ -48,6 +48,10 @@ const DrawerNav = (props) => {
                     ModalProps={{
                         keepMounted: true, // Better open performance on mobile.
                     }}
+                    sx={{
+                        display: { xs: 'block', sm: 'none' },
+                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                      }}
                 >
                     <DrawerLet toolbar={classes.toolbar} />
                 </Drawer>

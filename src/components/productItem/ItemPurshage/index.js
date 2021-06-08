@@ -192,8 +192,7 @@ const ItemPurshage = (props) => {
         history.push('/');
     }
     return (
-        <Grid container spacing={2}>
-            <Grid item lg={12}>
+        <div>
                 {!loading ? (
                     <>
                         <Card className={classes.root} elevation={0}>
@@ -244,7 +243,7 @@ const ItemPurshage = (props) => {
                                         </Typography>
                                         {
                                             item._idadds.map(value => (
-                                                <div className={`${classes.formGroup} ${classes.margin}`}>
+                                                <div key={`${value}`} className={`${classes.formGroup} ${classes.margin}`}>
                                                     {/* <InputLabel className={classes.label} shrink htmlFor={value}>{value}</InputLabel> */}
 
                                                     <TextField
@@ -302,8 +301,7 @@ const ItemPurshage = (props) => {
                     </>
                 )
                 }
-            </Grid>
-        </Grid>
+          </div>
     );
 };
 

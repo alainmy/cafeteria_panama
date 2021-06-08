@@ -42,6 +42,7 @@ const Menu = (props) => {
             {
                 menu.map((item, index) => (
                     <Link
+                    key={`${item}-${index}`}
                         to={`/${item.url}`}
                         className={`${classes[item.class]} ${classes.toolbarLink}`}
                     >

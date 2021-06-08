@@ -42,16 +42,16 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2)
   },
   functions: {
-    display:'flex',
-    flexDirection:'row',
-    justifyContent:'space-between',
-    alignItems:'center'
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   info: {
-    display:'flex',
-    flexDirection:'row',
-    justifyContent:'space-between',
-    alignItems:'center'
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
 }));
 
@@ -75,28 +75,28 @@ export default function RecipeReviewCard(props) {
 
   return (
     // <Link component={RouterLink}}>
-    <li>
-      <ListItem  disabled={item.state !== 'ENABLE'}>
+    <>
+      <ListItem disabled={item.state !== 'ENABLE'}>
         <ListItemAvatar>
-          <Avatar  alt="Remy Sharp" src={`https://backend.nelosoftt.com/image/${item._filename}`} className={classes.large} />
+          <Avatar alt="Remy Sharp" src={`https://backend.nelosoftt.com/image/${item._filename}`} className={classes.large} />
         </ListItemAvatar>
         <ListItemText
           primary={
             <React.Fragment>
-              <div className = {classes.info}>
-              <Typography
-                component="span"
-                variant="subtitle1"
-                className={classes.title}
-                color="primary"
-              >
-                {item.name}
-              </Typography>
-              <IconButton component={RouterLink} to={`${to}`}>
+              <div className={classes.info}>
+                <Typography
+                  component="span"
+                  variant="subtitle1"
+                  className={classes.title}
+                  color="primary"
+                >
+                  {item.name}
+                </Typography>
+                <IconButton component={RouterLink} to={`${to}`}>
                   {favorite ?
-                    <><FavoriteIcon color="error"/></> : <><FavoriteBorderIcon color="error"/></>  
-                }
-                  
+                    <><FavoriteIcon color="error" /></> : <><FavoriteBorderIcon color="error" /></>
+                  }
+
                 </IconButton>
               </div>
             </React.Fragment>
@@ -111,7 +111,7 @@ export default function RecipeReviewCard(props) {
               >
                 <b>price:</b> ${item.price}
               </Typography>
-              <div className = {classes.functions}>
+              <div className={classes.functions}>
                 <Rating
                   name="hover-feedback"
                   size="small"
@@ -125,14 +125,14 @@ export default function RecipeReviewCard(props) {
                   }}
                 />
                 <IconButton component={RouterLink} to={`${to}`}>
-                  <AddShoppingCartIcon color="primary"/>
+                  <AddShoppingCartIcon color="primary" />
                 </IconButton>
-                </div>
+              </div>
             </React.Fragment>
           }
         />
       </ListItem>
-    </li>
+    </>
     // </Link>
 
   );

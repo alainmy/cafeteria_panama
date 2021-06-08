@@ -9,7 +9,7 @@ const DrawerLet = (props) =>(
       <div className={props.toolbar} />
       <Divider />
       <List>
-        {[{name: 'Inicio',url: '/'}, {name: 'Pedidos',url: '/order'}].map((text, index) => (
+        {[{name: 'Inicio',url: '/'},{name:'Carta',url:'/ordenar'}, {name: 'Pedidos',url: '/order'}].map((text, index) => (
           <li>
             <ListItem key={text.name} component={RouterLink} to={`${text.url}`} >
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>

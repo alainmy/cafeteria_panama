@@ -195,10 +195,7 @@ const Order = (props) => {
     }, [])
     return (
         <>
-            <Container maxWidth="md">
-                {/* <ModalMap open={open} handleClose={handleClose} /> */}
-                <Grid container spacing={2}>
-                    <Grid item xs ={6} md={6}>
+            
                         <Paper className={classes.paper} elevation={0}>
                             <form action="" method="POST" onSubmit={submitForm}>
                                 <FormControl className = {classes.address}>
@@ -216,14 +213,10 @@ const Order = (props) => {
                                 </FormControl>
                             </form>
                         </Paper>
-                    </Grid>
-                    <Grid item xs ={6} md={6}>
                         <Paper className={classes.paper} elevation = {0}>
                             {/* <IssTracker></IssTracker> */}
                         </Paper>
-                    </Grid>
-                </Grid>
-            </Container>
+                    
         </>
     );
 };

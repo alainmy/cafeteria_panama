@@ -14,8 +14,8 @@ import { CssBaseline, makeStyles } from '@material-ui/core';
 const App = () => {
   
     return (
-        <div style={{background:'lightgrey'}}>
-            <Container maxWidth = "md">
+        <div style={{background:`url(${"assets/images/NacionSushi.jpg"}) center no-repeat`}}>
+            <Container maxWidth = "lg">
             <Layout/>
         </Container>
         </div>

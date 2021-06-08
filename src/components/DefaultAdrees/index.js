@@ -39,7 +39,7 @@ const DefaultAdrees = (props) => {
         if (navigator.geolocation) {
             
             navigator.geolocation.getCurrentPosition(function (positionx) {
-
+                debugger
                 console.log(positionx)
                 var lat = positionx.coords.latitude;
                 var lng = positionx.coords.longitude;
