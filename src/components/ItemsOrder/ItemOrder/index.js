@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   paper:{
     display:'flex',
     flexDirection:'column',
-    justifyContent:'center',
+    // justifyContent:'center',
     padding:theme.spacing(2),
     //alignItems:'center'
   },
@@ -38,10 +38,8 @@ const useStyles = makeStyles((theme) => ({
     
   },
   headerDesc:{
-    width:'100%',
     display:'flex',
     flexDirection:'column',
-    justifyContent:'space-between',
     marginLeft:theme.spacing(1),
     [theme.breakpoints.down('xs')]: {
      // alignItems:'center',
@@ -52,11 +50,11 @@ const useStyles = makeStyles((theme) => ({
     display:'flex',
     flexDirection:'column',
     justifyContent:'space-between',
-    alignItems:'end',
+    alignItems:'flex-end',
     marginLeft:theme.spacing(1),
-    [theme.breakpoints.down('xs')]: {
-     // alignItems:'center',
-  },
+  //   [theme.breakpoints.down('xs')]: {
+  //    // alignItems:'center',
+  // },
   },
   paperContent:{
     display:'flex',
@@ -86,7 +84,11 @@ const useStyles = makeStyles((theme) => ({
    margin:theme.spacing(0.5),
   },
   price:{
-    fontWeight:'bold'
+    padding:theme.spacing(0.5),
+    fontWeight:'bold',
+    background:'#ff9800',
+    width:'auto',
+    borderRadius:'2px'
   },
   add:{
     fontWeight:'bold'
@@ -120,10 +122,14 @@ export default function ItemOrder(props) {
               
               <div className = {classes.headerDesc}>
                 <Typography variant="h6" color="primary" >{`${props.item.name}(${props.item.count})`}</Typography>
-                <Typography variant="body2" color="primary">{`$${props.item.price} `}</Typography>
+                <Typography variant="caption" color="primary" component="span" >
+                  <span className = {classes.price}>
+                  {`$${props.item.price} `}
+                  </span>
+                </Typography>
               </div>
               <div className = {classes.headerFunc}>
-                <IconButton aria-label="delete" color = 'error'>
+                <IconButton aria-label="delete">
                   <DeleteIcon color = 'error'/>
                 </IconButton>
               </div>
@@ -136,12 +142,11 @@ export default function ItemOrder(props) {
                     <Typography variant="body2" color="primary" gutterBottom className = {classes.add}>Agregos:</Typography>
                     <div className= {classes.addsBox}>
                       
-                          {Object.keys(props.item._idadds).map((item) => (
-                              <Typography variant="caption" color="primary"> {item}, </Typography>
+                          {Object.keys(props.item._idadds).map((item,index) => (
+                              <Typography key={`${item}-${index}`} variant="caption" color="primary"> {item}, </Typography>
                               // <Chip size="small" label={item} variant="outlined" className={classes.ChipMarginBottom}/>
                               ))
                           }
-                      
                     </div>
                   </div>
               </>

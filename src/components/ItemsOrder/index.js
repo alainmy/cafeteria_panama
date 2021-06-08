@@ -15,97 +15,96 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         // background:'#FAD7A0',
-        width:'100%',
+        width: '100%',
         marginBottom: theme.spacing(3)
     },
     paperOrder: {
-       // background:'#FAD7A0',
-        width:'100%',
+        // background:'#FAD7A0',
+        width: '100%',
         marginBottom: theme.spacing(3)
     },
-    subheaderAddress:{
-        width:'100%',
-        padding:theme.spacing(2),
-        display:'flex',
-        flexDirection:'column',
-        justifyContent:'space-between',
+    subheaderAddress: {
+        width: '100%',
+        padding: theme.spacing(2),
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
     },
-    subheader:{
-        width:'100%',
-        padding:theme.spacing(2),
-        display:'flex',
-        flexDirection:'row',
-        justifyContent:'space-between',
-        alignItems:'center',
-        color:'white'
+    subheader: {
+        width: '100%',
+        padding: theme.spacing(2),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        color: 'white'
     },
-    address:{
-        width:'100%',
-        padding:theme.spacing(2),
-        '& .MuiInputLabel-formControl':{
-            position:'relative'
+    address: {
+        width: '100%',
+        padding: theme.spacing(2),
+        '& .MuiInputLabel-formControl': {
+            position: 'relative'
         }
     },
-    orderButtom:{
-        color:'black',
+    orderButtom: {
+        color: 'black',
         backgroundColor: '#ff9800',
     },
-    span:{
+    span: {
         //backgroundColor: '#ff9800',
         //color:'',
-        padding:theme.spacing(1),
-        fontWeight:'normal',
-        borderRadius:'4px'
+        padding: theme.spacing(1),
+        fontWeight: 'normal',
+        borderRadius: '4px'
     }
 }));
 const ItemsOrder = (props) => {
 
     const classes = useStyles();
-    const [open,setOpen] = useState(false)
-    
+    const [open, setOpen] = useState(false)
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
     const handleOpen = () => {
         setOpen(true);
-      };
-    
-      const handleClose = () => {
+    };
+
+    const handleClose = () => {
         setOpen(false);
     };
-   
+
     return (
-        
-                <Grid container spacing={2} justify='center' alignItems='center'>
-                    <Grid item md={12}>
-                        <Paper className={classes.paper} elevation = {0}>
-                            <div className = {classes.subheaderAddress}>
-                                <DefaultAdrees />
-                            </div>
-                        </Paper>
-                        <Paper className={classes.paperOrder} elevation = {0}>
-                            <div className = {classes.subheader}>
-                                <Typography variant="h6" color="primary"> Precio Total: <span className={classes.span}>
-                                        ${props.order.priceTotal}
-                                    </span> </Typography>
-                                <Button variant="contained" color="primary" className={classes.orderButtom} component = {RouterLink} to ="/full-order">
-                                    Ordenar
+
+        <div style={{display:'flex',flexDirection:'column',padding:16}}>
+            <Paper className={classes.paper} elevation={0}>
+                <div className={classes.subheaderAddress}>
+                    {/* <DefaultAdrees /> */}
+                </div>
+            </Paper>
+            <Paper className={classes.paperOrder} elevation={0}>
+                <div className={classes.subheader}>
+                    <Typography variant="h6" color="primary"> Precio Total: <span className={classes.span}>
+                        ${props.order.priceTotal}
+                    </span> </Typography>
+                    <Button variant="contained" color="primary" className={classes.orderButtom} component={RouterLink} to="/full-order">
+                        Ordenar
                                 </Button>
-                            </div>
+                </div>
+            </Paper>
+            {props.order.items ?
+                props.order.items.map((item, index) =>
+                (
+                        <Paper key={`${item}-${index}`}  className={classes.paper} elevation={0}>
+                            <ItemOrder item={item} />
                         </Paper>
-                        {props.order.items ?
-                            props.order.items.map((item, index) =>
-                            (
-                                <Paper key={`${item}-${item._id}`} className={classes.paper} elevation = {0}>
-                                    <ItemOrder item={item} />
-                                </Paper>
-                            )
-                            )
-                            : <p>Loading ....</p>
-                        }
-                    </Grid>
-                </Grid>
+                    
+                )
+                )
+                : <p>Loading ....</p>
+            }
+        </div>
     );
 
 };

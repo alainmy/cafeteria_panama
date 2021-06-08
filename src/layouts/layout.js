@@ -16,7 +16,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import ProductList from '../components/productsList';
 import { ListsContext } from '../Context/ItemsContextProvider';
 import ItemsContextProvider from '../Context/ItemsContextProvider';
-import { Button, Drawer, Grid } from '@material-ui/core';
+import { Button, Divider, Drawer, Grid, List, ListItem, ListItemIcon, ListItemText, Paper } from '@material-ui/core';
 import drawer from '../components/DrawerLeft/index';
 import Hidden from '@material-ui/core/Hidden';
 import { useTheme } from '@emotion/react';
@@ -26,6 +26,12 @@ import ItemsOrder from '../components/ItemsOrder';
 import Order from '../Views/Order';
 import IssTracker from '../components/IssTracker';
 import SubHeaderProduct from '../components/SubHeaderProduct';
+import LandPageIndex from '../Views/land_page_index';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
+
+import SideMenu from '../components/Menu/SideMenu';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -38,12 +44,12 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
     // width:'100%',
     // height:'100%',
-    background:'lightgrey'
+    background: 'lightgrey'
   },
   appBar: {
-    background:'#ff9800',
+    background: '#ff9800',
     [theme.breakpoints.up('sm')]: {
-     // width: `calc(100% - ${drawerWidth}px) !important`,
+      // width: `calc(100% - ${drawerWidth}px) !important`,
       marginLeft: `${drawerWidth}px !important`,
     },
   },
@@ -72,8 +78,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
   },
   bageContent: {
-    background:'#fff'
+    background: '#fff'
   },
+  sideMenu:{
+    opacity:0.8,
+    [theme.breakpoints.down('sm')]: {
+     display:'none'
+   },
+  }
 }));
 
 const ScrollTop = (props) => {
@@ -126,47 +138,68 @@ export default function Layout(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
 
-  return ( 
+  return (
+    <div style={{ display: 'flex',justifyContent:'center',flexDirection:'column',padding:16 }}>
       <ItemsContextProvider>
         <ListsContext.Consumer>
-          {(list, loading,filter, handleFilter,categories,error) => (   
-            <>            
+          {(list, loading, filter, handleFilter, categories, error) => (
+            <>
               <CssBaseline />
-              <Header 
-                onClick={() => handleDrawerToggle()} 
-                handleFilter = {list.handleFilter} 
-                categories = {list.categories} 
-                loading = {loading}
-                classes = {{appBar:classes.appBar,menuButton:classes.menuButton,sectionDesktop:classes.sectionDesktop,grow:classes.grow,bageContent:classes.bageContent}}
+              <Header
+                onClick={() => handleDrawerToggle()}
+                handleFilter={list.handleFilter}
+                categories={list.categories}
+                loading={loading}
+                classes={{ appBar: classes.appBar, menuButton: classes.menuButton, sectionDesktop: classes.sectionDesktop, grow: classes.grow, bageContent: classes.bageContent }}
               />
-              <div className={classes.drawerHeader} />
-              <Grid container spacing={4}>
-                <Grid item md = {12}>
-                  {/* Subheader */}
-                  
-                  {/* <SubHeaderProduct /> */}
-                </Grid>
-              </Grid>
-              {/* <DrawerNav mobileOpen={mobileOpen} handleDrawerToggle={() => handleDrawerToggle()} container = {container}/> */}
+              {/* <div className={classes.drawerHeader} /> */}
+
+
               {/* <Toolbar id="back-to-top-anchor" /> */}
-             
-                <Switch>
-                  {list.error === '' ?
-                    <>
-                      <Route exact path='/ordenar' render={props => list && <ProductList context={{ list }} {...props} />} />
-                      <Route exact path='/:id/items' render={props => list && <ItemPurshage item={{ list }} {...props} />} />
-                      <Route exact path='/order' component ={ItemsOrder} />
-                      <Route exact path='/full-order' component ={Order} />
-                      <Route exact path='/edit-address' component ={IssTracker} />
-                      
-                    </>:
-                    <p>{list.error}</p>
-                  }
-                </Switch>
+              {/* <div
+                style={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+                aria-label="mailbox folders"
+              > */}
+                {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+                {/* <DrawerNav mobileOpen={mobileOpen} handleDrawerToggle={() => handleDrawerToggle()} container={container} /> */}
+              {/* </div> */}
+              {/* <main style={{ flexGrow: 1, p: 3 }}> */}
+                
+                <div style={{margin:16,opacity:0.8}}>
+                <Toolbar />
+                <Grid container justify="center" spacing={4}>
+                  <Grid item xs = {12} md={4} sm={4}>
+                    <div className = {classes.sideMenu}>
+                    <SideMenu />
+                    </div>
+                  </Grid>
+                  <Grid item xs = {12} sm={8} md={8}>
+                    {/* <div style={{opacity:0.8}}> */}
+                    <Switch>
+                      {list.error === '' ?
+                        <>
+                          <Route exact path='/carta' render={props => list && <ProductList context={{ list }} {...props} />} />
+                          <Route exact path='/:id/items' render={props => list && <ItemPurshage item={{ list }} {...props} />} />
+                          <Route exact path='/pedidos' component={ItemsOrder} />
+                          <Route exact path='/' component={LandPageIndex} />
+                          <Route exact path='/full-order' component={Order} />
+                          <Route exact path='/edit-address' component={IssTracker} />
+
+                        </> :
+                        <p>{list.error}</p>
+                      }
+                    </Switch>
+                    {/* </div> */}
+                  </Grid>
+                </Grid>
+                </div>
+
+              {/* </main> */}
             </>
           )}
         </ListsContext.Consumer>
-      </ItemsContextProvider>
+      </ItemsContextProvider >
+    </div>
   );
 }
 
